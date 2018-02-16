@@ -1,0 +1,2 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('bsh-core-2.0b4.jar'))
