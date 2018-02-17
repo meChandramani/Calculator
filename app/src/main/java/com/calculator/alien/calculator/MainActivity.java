@@ -2,6 +2,8 @@ package com.calculator.alien.calculator;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,6 +31,20 @@ public class MainActivity extends AppCompatActivity {
         _txtScreen.setText(strr);
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the main_menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+
+        return true;
+    }
 public void onClickClearr(View v){
         if(strr.length()>1){
         strr = strr.substring(0,strr.length()-1);
@@ -47,6 +63,11 @@ public  void OnClickOndot(View v){
     dotSwitch = true;
 
 }
+public void OnClckOnfactoriall(View v){
+    dotSwitch=true;
+    strr +="";
+    _txtScreen.setText(strr);
+}
 
     public void onClickonOperator(View v)
     {if(coun == 1){
@@ -61,9 +82,11 @@ public  void OnClickOndot(View v){
             strr += b.getText();
             dotSwitch=false;
 
+
         }
    //  currrOperator = b.getText().toString();
         _txtScreen.setText(strr);
+
 
     }
     public void onCLickonNumber(View v)
@@ -88,10 +111,17 @@ public  void OnClickOndot(View v){
         _txtScreen.setText(strr);
 
     }
-    public void onClickonBracketss(View v)     //ToDo : add brackets prooerty in the expression
-                                                // TOdo : brackets button won't work without it
+    public void onClickonBracketss(View v)   
+
 
     {
+        Button b = (Button) v;
+        strr= strr + b.getText();
+        _txtScreen.setText(strr);
+        if(strr.charAt(strr.length()-1) == ')' )
+        {
+            dotSwitch=true;
+        }
 
     }
     public void onClickEquals(View v) {
@@ -106,7 +136,7 @@ public  void OnClickOndot(View v){
 
             Interpreter interpreter = new Interpreter();
             interpreter.eval("Double result = new Double(0)");
-             interpreter.eval("result =" + strr+".0");
+             interpreter.eval("result =" + strr);
          _txtScreen.setText(strr+ "\n" +"=" +String.valueOf((interpreter.get("result"))));
           //  _txtScreen.setText(strr+ "\n" + String.valueOf(db));
             cleanBufff();
