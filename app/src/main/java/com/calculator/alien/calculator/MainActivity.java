@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView _txtScreen ;
     String strr = "";
+    String txtstr="";
     int coun = 0;
     int sgnn =0;
     boolean dotSwitch = false;
@@ -26,12 +27,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+      //  Toolbar toolbar = (Toolbar) findViewById(R.id)
+       //setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_calculatoricon);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+       getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         _txtScreen = (TextView)findViewById(R.id.textResult);
-        _txtScreen.setText(strr);
+        _txtScreen.setText(txtstr);
 
     }
-    @Override
+     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the main_menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -48,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
 public void onClickClearr(View v){
         if(strr.length()>1){
         strr = strr.substring(0,strr.length()-1);
-            _txtScreen.setText(strr);
+        txtstr=txtstr.substring(0,txtstr.length()-1);
+            _txtScreen.setText(txtstr);
         }
         else if(strr.length()==1)
         {
             strr = " ";
+            txtstr=" ";
             _txtScreen.setText(strr);
         }
 }
@@ -60,6 +70,7 @@ public void onClickClearr(View v){
 public  void OnClickOndot(View v){
 
     strr+=".";
+    txtstr+=".";
     dotSwitch = true;
 
 }
@@ -76,16 +87,18 @@ public void OnClckOnfactoriall(View v){
         Button b = (Button) v;
         if(!dotSwitch){
         strr= strr+ ".0" + b.getText();
+        txtstr += b.getText();
         }
         else
         {
             strr += b.getText();
             dotSwitch=false;
+            txtstr += b.getText();
 
 
         }
    //  currrOperator = b.getText().toString();
-        _txtScreen.setText(strr);
+        _txtScreen.setText(txtstr);
 
 
     }
@@ -97,21 +110,24 @@ public void OnClckOnfactoriall(View v){
         }
         Button b = (Button) v;
         strr += b.getText();
-        _txtScreen.setText(strr);
+        txtstr += b.getText();
+        _txtScreen.setText(txtstr);
         }
 
     public void cleanBufff(){
         strr = "";
+        txtstr= "";
    //     currrOperator = "";
 
     }
     public void onClickC(View v)
     {
         strr = "";
+        txtstr ="";
         _txtScreen.setText(strr);
 
     }
-    public void onClickonBracketss(View v)   
+    public void onClickonBracketss(View v)
 
 
     {
@@ -137,10 +153,11 @@ public void OnClckOnfactoriall(View v){
             Interpreter interpreter = new Interpreter();
             interpreter.eval("Double result = new Double(0)");
              interpreter.eval("result =" + strr);
-         _txtScreen.setText(strr+ "\n" +"=" +String.valueOf((interpreter.get("result"))));
+         _txtScreen.setText(txtstr+ "\n" +"=" +String.valueOf((interpreter.get("result"))));
           //  _txtScreen.setText(strr+ "\n" + String.valueOf(db));
             cleanBufff();
             strr=String.valueOf(interpreter.get("result"));
+            txtstr=strr;
             coun=1;
 
         }catch (bsh.EvalError e){
